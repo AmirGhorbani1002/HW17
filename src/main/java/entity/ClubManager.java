@@ -1,5 +1,6 @@
 package entity;
 
+import entity.supers.Person;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.MapsId;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class ClubManager extends Person{
+public class ClubManager extends Person {
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId

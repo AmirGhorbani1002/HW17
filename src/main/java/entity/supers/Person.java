@@ -1,4 +1,4 @@
-package entity;
+package entity.supers;
 
 import base.BaseEntity;
 import jakarta.persistence.MappedSuperclass;

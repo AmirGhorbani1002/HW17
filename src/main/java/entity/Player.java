@@ -1,14 +1,16 @@
 package entity;
 
+import entity.enums.Position;
+import entity.enums.SalesStatus;
+import entity.supers.Person;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
-public class Player extends Person{
+public class Player extends Person {
 
     private Byte TShirtNumber;
     @ManyToOne(fetch = FetchType.LAZY)
