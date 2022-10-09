@@ -4,11 +4,13 @@ import entity.enums.SalesStatus;
 import entity.supers.Person;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Coach extends Person {
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -22,4 +24,7 @@ public class Coach extends Person {
     private Short numberOfLosses;
     private Short numberOfDraws;
 
+    public Coach(String firstname, String lastname, String nationalCode) {
+        super(firstname, lastname, nationalCode);
+    }
 }

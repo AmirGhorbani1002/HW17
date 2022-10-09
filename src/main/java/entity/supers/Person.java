@@ -16,7 +16,7 @@ public class Person extends BaseEntity {
     private String lastname;
     private String nationalCode;
 
-    public Person(String firstname, String lastname, String nationalCode, Double value) {
+    public Person(String firstname, String lastname, String nationalCode) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.nationalCode = nationalCode;

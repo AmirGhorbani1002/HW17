@@ -3,6 +3,7 @@ package entity;
 import base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Club extends BaseEntity {
 
     private String name;
@@ -30,5 +32,7 @@ public class Club extends BaseEntity {
     @Transient
     private Game game;
 
-
+    public Club(String name) {
+        this.name = name;
+    }
 }

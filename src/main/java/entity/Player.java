@@ -5,11 +5,13 @@ import entity.enums.SalesStatus;
 import entity.supers.Person;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Player extends Person {
 
     private Byte TShirtNumber;
@@ -25,4 +27,7 @@ public class Player extends Person {
     @Enumerated(EnumType.STRING)
     private Position position;
 
+    public Player(String firstname, String lastname, String nationalCode) {
+        super(firstname, lastname, nationalCode);
+    }
 }

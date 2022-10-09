@@ -1,11 +1,9 @@
 package entity;
 
 import base.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
@@ -13,6 +11,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Stadium extends BaseEntity {
 
     private String name;
@@ -22,4 +21,8 @@ public class Stadium extends BaseEntity {
     @OneToMany(mappedBy = "stadium")
     private Set<Club> clubs;
 
+    public Stadium(String name, int numberOfSeats) {
+        this.name = name;
+        this.numberOfSeats = numberOfSeats;
+    }
 }
