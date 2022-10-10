@@ -10,11 +10,19 @@ public class Main {
        /* Faker faker = new Faker();
         System.out.println(faker.number().randomDouble(0,10,1000));*/
         RandomMakes randomMakes = new RandomMakes();
-        randomMakes.createRandomPlayers(165);
         randomMakes.createRandomCity(6);
+        randomMakes.createRandomPlayers(165);
+        randomMakes.createRandomCoaches(15);
+        randomMakes.createRandomClubManagers(11);
         randomMakes.createRandomStadiumAndSetCity(11);
         randomMakes.createRandomClubsAndSetStadium(11);
         randomMakes.setRandomPlayersPositions(11);
+        randomMakes.setCoachesToTeams();
+        randomMakes.setClubManagersToTeams();
+        randomMakes.setRandomPlayersGKToTeams();
+        randomMakes.setRandomPlayersCBToTeams();
+        randomMakes.setRandomPlayersCMToTeams();
+        randomMakes.setRandomPlayersCFToTeams();
     }
 
 }

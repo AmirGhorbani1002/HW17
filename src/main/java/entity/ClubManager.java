@@ -16,8 +16,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ClubManager extends Person {
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @MapsId
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "clubManager")
     private Club club;
 
     public ClubManager(String firstname, String lastname, String nationalCode) {

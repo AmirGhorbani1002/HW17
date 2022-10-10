@@ -23,9 +23,9 @@ public class PlayerRepository implements BaseRepository<Player> {
                     .getEntityManagerFactory()
                     .createEntityManager();
             String hql = """
-                    select p from Player p where p.position =: input
+                    from Player p where p.position =: input
                     """;
-            TypedQuery<Player> typedQuery = em.createQuery(hql, Player.class).setParameter("input", position.name());
+            TypedQuery<Player> typedQuery = em.createQuery(hql, Player.class).setParameter("input", position);
             players = typedQuery.getResultList();
         } catch (Exception e) {
             return Optional.empty();
