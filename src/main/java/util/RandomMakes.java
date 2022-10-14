@@ -14,7 +14,21 @@ public class RandomMakes {
 
     private final Faker faker = new Faker();
 
-    public void createRandomPlayers(int n) {
+    public void createLeague(int n) {
+        this.createRandomCity(n / 2 + 1);
+        this.createRandomPlayers(n * 16);
+        this.createRandomCoaches(n + 5);
+        this.createRandomClubManagers(n);
+        this.createRandomStadiumAndSetCity(n);
+        this.createRandomClubsAndSetStadium(n);
+        this.setRandomPlayersPositions(n);
+        this.setCoachesToTeams();
+        this.setClubManagersToTeams();
+        this.setRandomPlayersGKToTeams();
+        this.setRandomPlayersANOTHERToTeams();
+    }
+
+    private void createRandomPlayers(int n) {
         for (int i = 0; i < n; i++) {
             String firstname = faker.name().firstName();
             String lastname = faker.name().firstName();
@@ -28,7 +42,7 @@ public class RandomMakes {
         }
     }
 
-    public void createRandomCoaches(int n) {
+    private void createRandomCoaches(int n) {
         for (int i = 0; i < n; i++) {
             String firstname = faker.name().firstName();
             String lastname = faker.name().lastName();
@@ -40,7 +54,7 @@ public class RandomMakes {
         }
     }
 
-    public void createRandomClubManagers(int n) {
+    private void createRandomClubManagers(int n) {
         for (int i = 0; i < n; i++) {
             String firstname = faker.name().firstName();
             String lastname = faker.name().firstName();
@@ -51,7 +65,7 @@ public class RandomMakes {
         }
     }
 
-    public void createRandomCity(int n) {
+    private void createRandomCity(int n) {
         for (int i = 0; i < n; i++) {
             String name = faker.address().city();
             String code = faker.address().zipCode();
@@ -61,7 +75,7 @@ public class RandomMakes {
         }
     }
 
-    public void createRandomStadiumAndSetCity(int n) {
+    private void createRandomStadiumAndSetCity(int n) {
         for (int i = 0; i < n; i++) {
             String name = faker.team().name();
             int numberOfSeats = faker.number().numberBetween(10000, 500000);
@@ -80,10 +94,10 @@ public class RandomMakes {
         }
     }
 
-    public void createRandomClubsAndSetStadium(int n) {
+    private void createRandomClubsAndSetStadium(int n) {
         for (int i = 0; i < n; i++) {
             String name = faker.team().name();
-            Club club = new Club(name, (short) 0, (short) 0, (short) 0);
+            Club club = new Club(name, (short) 0, (short) 0, (short) 0, (short) 0);
             StadiumService stadiumService = new StadiumService();
             Optional<List<Stadium>> optionalStadiums = stadiumService.loadAll();
             if (optionalStadiums.isPresent()) {
@@ -95,7 +109,7 @@ public class RandomMakes {
         }
     }
 
-    public void setCoachesToTeams() {
+    private void setCoachesToTeams() {
         AtomicInteger i = new AtomicInteger();
         ClubService clubService = new ClubService();
         Optional<List<Club>> optionalClubs = clubService.loadAll();
@@ -116,7 +130,7 @@ public class RandomMakes {
         }
     }
 
-    public void setClubManagersToTeams() {
+    private void setClubManagersToTeams() {
         AtomicInteger i = new AtomicInteger();
         ClubService clubService = new ClubService();
         Optional<List<Club>> optionalClubs = clubService.loadAll();
@@ -132,27 +146,23 @@ public class RandomMakes {
         }
     }
 
-    public void setRandomPlayersPositions(int n) {
+    private void setRandomPlayersPositions(int n) {
         List<Position> positions = List.of(Position.values());
         PlayerService playerService = new PlayerService();
         Optional<List<Player>> optionalPlayers = playerService.loadAll();
         if (optionalPlayers.isPresent()) {
             List<Player> players = optionalPlayers.get();
-            for (int i = 0; i < n * 15; i++) {
+            for (int i = 0; i < n * 16; i++) {
                 if (i < n * 2 + n)
                     players.get(i).setPosition(positions.get(0));
-                else if (i < (n * 4 + n) + (n * 2 + n))
-                    players.get(i).setPosition(positions.get(1));
-                else if (i < (n * 3 + n) + (n * 4 + n + (n * 2 + n)))
-                    players.get(i).setPosition(positions.get(2));
                 else
-                    players.get(i).setPosition(positions.get(3));
+                    players.get(i).setPosition(positions.get(1));
                 playerService.saveOrUpdate(players.get(i));
             }
         }
     }
 
-    public void setRandomPlayersGKToTeams() {
+    private void setRandomPlayersGKToTeams() {
         AtomicInteger i = new AtomicInteger();
         AtomicInteger number = new AtomicInteger();
         number.set(1);
@@ -174,18 +184,18 @@ public class RandomMakes {
         });
     }
 
-    public void setRandomPlayersCBToTeams() {
+    private void setRandomPlayersANOTHERToTeams() {
         AtomicInteger i = new AtomicInteger();
         AtomicInteger number = new AtomicInteger();
         number.set(3);
         ClubService clubService = new ClubService();
         Optional<List<Club>> optionalClubs = clubService.loadAll();
         PlayerService playerService = new PlayerService();
-        Optional<List<Player>> optionalPlayersGK = playerService.loadByPosition(Position.CB);
+        Optional<List<Player>> optionalPlayersCB = playerService.loadByPosition(Position.ANOTHER);
         optionalClubs.ifPresent(clubs -> {
             clubs.forEach(club -> {
-                optionalPlayersGK.ifPresent(players -> {
-                    for (int j = 0; j < 4; j++) {
+                optionalPlayersCB.ifPresent(players -> {
+                    for (int j = 0; j < 12; j++) {
                         club.getPlayers().add(players.get(i.get()));
                         setPlayerFields(i, number, club, players);
                     }
@@ -196,57 +206,13 @@ public class RandomMakes {
         });
     }
 
-    public void setRandomPlayersCMToTeams() {
-        AtomicInteger i = new AtomicInteger();
-        AtomicInteger number = new AtomicInteger();
-        number.set(7);
-        ClubService clubService = new ClubService();
-        Optional<List<Club>> optionalClubs = clubService.loadAll();
-        PlayerService playerService = new PlayerService();
-        Optional<List<Player>> optionalPlayersGK = playerService.loadByPosition(Position.CM);
-        optionalClubs.ifPresent(clubs -> {
-            clubs.forEach(club -> {
-                optionalPlayersGK.ifPresent(players -> {
-                    for (int j = 0; j < 3; j++) {
-                        club.getPlayers().add(players.get(i.get()));
-                        setPlayerFields(i, number, club, players);
-                    }
-                });
-                number.set(7);
-                clubService.saveOrUpdate(club);
-            });
-        });
-    }
-
-    public void setRandomPlayersCFToTeams() {
-        AtomicInteger i = new AtomicInteger();
-        AtomicInteger number = new AtomicInteger();
-        number.set(10);
-        ClubService clubService = new ClubService();
-        Optional<List<Club>> optionalClubs = clubService.loadAll();
-        PlayerService playerService = new PlayerService();
-        Optional<List<Player>> optionalPlayersGK = playerService.loadByPosition(Position.CF);
-        optionalClubs.ifPresent(clubs -> {
-            clubs.forEach(club -> {
-                optionalPlayersGK.ifPresent(players -> {
-                    for (int j = 0; j < 2; j++) {
-                        club.getPlayers().add(players.get(i.get()));
-                        setPlayerFields(i, number, club, players);
-                    }
-                });
-                number.set(10);
-                clubService.saveOrUpdate(club);
-            });
-        });
-    }
-
     private void setPlayerFields(AtomicInteger i, AtomicInteger number, Club club, List<Player> players) {
         players.get(i.get()).setSalesStatus(SalesStatus.NO);
         players.get(i.get()).setClub(club);
         players.get(i.get()).setTransferValue(0D);
         players.get(i.get()).setNumberOfGoalsScored((short) 0);
-        players.get(i.get()).setNumberOfRedCards((short) 0);
-        players.get(i.get()).setNumberOfYellowCards((short) 0);
+        //players.get(i.get()).setNumberOfRedCards((short) 0);
+        //players.get(i.get()).setNumberOfYellowCards((short) 0);
         players.get(i.getAndIncrement()).setTShirtNumber((byte) number.getAndIncrement());
     }
 

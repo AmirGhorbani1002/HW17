@@ -22,8 +22,9 @@ public class Player extends Person {
     @Enumerated(EnumType.STRING)
     private SalesStatus salesStatus;
     private Short numberOfGoalsScored;
-    private Short numberOfYellowCards;
-    private Short numberOfRedCards;
+    private String gamesPlayed;
+    //private Short numberOfYellowCards;
+    //private Short numberOfRedCards;
     @Enumerated(EnumType.STRING)
     private Position position;
 

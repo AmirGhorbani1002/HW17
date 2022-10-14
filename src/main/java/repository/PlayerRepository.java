@@ -23,7 +23,7 @@ public class PlayerRepository implements BaseRepository<Player> {
                     .getEntityManagerFactory()
                     .createEntityManager();
             String hql = """
-                    from Player p where p.position =: input
+                    select p from Player p where p.position =: input
                     """;
             TypedQuery<Player> typedQuery = em.createQuery(hql, Player.class).setParameter("input", position);
             players = typedQuery.getResultList();
