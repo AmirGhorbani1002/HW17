@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,10 +29,9 @@ public class Club extends BaseEntity {
     private Short numberOfDraws;
     private Short score;
 
-    @OneToOne
-    @MapsId
+    @OneToMany(mappedBy = "club")
     @Transient
-    private Game game;
+    private Set<Game> game;
 
     public Club(String name, Short numberOfWins, Short numberOfLosses, Short numberOfDraws, Short score) {
         this.name = name;

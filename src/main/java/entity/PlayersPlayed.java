@@ -6,9 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class PlayersScored extends BaseEntity {
+public class PlayersPlayed extends BaseEntity {
 
-    private int numberOfGoals;
     @ManyToOne(cascade = CascadeType.ALL)
     private GameInformation gameInformation;
     @ManyToOne(cascade = CascadeType.ALL)
